@@ -1,0 +1,16 @@
+.btn {
+  padding: .5em;
+  outline: 1px solid;
+  background: none;
+  border-radius: 5px;
+  border: none;
+}
+
+.noBorderAndOutline {
+  border: none;
+  outline: none;
+}
+
+.btn:hover {
+  color: var(--color-magenta);
+}
