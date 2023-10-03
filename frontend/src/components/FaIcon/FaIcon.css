@@ -7,3 +7,7 @@
 .fa-size-lg {
   font-size: var(--fa-size-lg);
 }
+
+.fa-size-xl {
+  font-size: var(--fa-size-xl);
+}
