@@ -2,10 +2,9 @@ import './CreateTask.css';
 
 const CreateTask = () => {
   return(
-    <section>
+    <section className="create-task-section">
       <div>
         <h1>Create Task</h1>
-        <p>something goes here</p>
       </div>
     </section>
   )

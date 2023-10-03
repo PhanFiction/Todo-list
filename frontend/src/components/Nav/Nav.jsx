@@ -35,14 +35,8 @@ const Nav = () => {
   }
 
   return(
-    <nav className={toggle === true ? 'nav' : 'hide-nav'}>
-      <div className="hamburger" onClick={toggleMenu}>
-        <div className="burger"></div>
-        <div className="burger"></div>
-        <div className="burger"></div>
-      </div>
-        {
-          toggle === true ? 
+    <>
+      <nav className="desktop">
         <aside>
           <ul>
             <li>
@@ -68,11 +62,11 @@ const Nav = () => {
             <h1>Projects</h1>
             {
               projects.map((item, index) =>
-               <li key={item.id}>
+              <li key={item.id}>
                 <LinkRoute to={item.to}>
                   {item.name}
                 </LinkRoute>
-               </li>
+              </li>
               )
             }
             <button onClick={addProject}>
@@ -82,9 +76,58 @@ const Nav = () => {
             </button>
           </ul>
         </aside>
-          : <></>
-        }
-    </nav>
+      </nav>
+      <nav className="mobile">
+        <div className="hamburger" onClick={toggleMenu}>
+          <div className="burger"></div>
+          <div className="burger"></div>
+          <div className="burger"></div>
+        </div>
+          {
+            toggle === true ? 
+          <aside className={toggle === true ? 'nav' : 'hide-nav'}>
+            <ul>
+              <li>
+                <LinkRoute to='/'>
+                  <FaIcon iconName={faHouse} size="sm"/>
+                    Home
+                </LinkRoute>
+              </li>
+              <li>
+                <LinkRoute to='/today'>
+                  <FaIcon iconName={faCalendarDay} size="sm"/>
+                  Today
+                </LinkRoute>
+              </li>
+              <li>
+                <LinkRoute to='/this-week'>
+                  <FaIcon iconName={faCalendarWeek} size="sm"/>
+                  This week
+                </LinkRoute>
+              </li>
+            </ul>
+            <ul className="project-list">
+              <h1>Projects</h1>
+              {
+                projects.map((item, index) =>
+                <li key={item.id}>
+                  <LinkRoute to={item.to}>
+                    {item.name}
+                  </LinkRoute>
+                </li>
+                )
+              }
+              <button onClick={addProject}>
+                <LinkRoute to="/create-task">
+                  Add Task
+                </LinkRoute>
+              </button>
+            </ul>
+          </aside>
+            : <></>
+          }
+      </nav>
+    </>
   )
 };
 

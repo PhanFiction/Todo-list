@@ -21,7 +21,6 @@ function App() {
       <Header />
       <div className="page-layout">
         <Nav />
-        <div>
           <Switch>
             <Route path="/projects" component={Projects} />
             <Route exact path="/today" component={Today} />
@@ -30,7 +29,6 @@ function App() {
             <Route exact path="/create-task" component={CreateTask}/> 
             <Route exact path="/" component={Home} />
           </Switch>
-        </div>
         <Footer />
       </div>
     </>
