@@ -1,0 +1,14 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  gap: 10px;
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: var(--color-primary-dark);
+  color: var(--color-white);
+  font-size: 1rem;
+  font-family: var(--font-inclusive-sans);
+  text-align: center;
+}
