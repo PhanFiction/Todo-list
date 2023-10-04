@@ -1,4 +1,4 @@
-const Task = () => {
+const TaskPage = () => {
   return(
     <section>
       <h1>Task</h1>
@@ -6,4 +6,4 @@ const Task = () => {
   )
 };
 
-export default Task;
+export default TaskPage;

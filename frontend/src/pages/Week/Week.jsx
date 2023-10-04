@@ -1,6 +1,8 @@
+import './Week.css';
+
 const Week = () => {
   return(
-    <section>
+    <section className="week-section">
       <h1>Week</h1>
     </section>
   )

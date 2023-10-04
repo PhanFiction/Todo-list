@@ -1,8 +1,8 @@
 import './Button.css';
 
-const Button = ({ children, noBorder=true }) => {
+const Button = ({ children, noBorder=true, handleClick}) => {
   return(
-    <button className={`btn ${noBorder === true ? 'noBorderAndOutline' : ''}`}>
+    <button onClick={handleClick} className={`btn ${noBorder === true ? 'noBorderAndOutline' : ''}`}>
       { children }
     </button>
   );

@@ -1,0 +1,21 @@
+.task-container {
+  background-color: beige;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
+.task-items {
+  display: flex;
+  align-items: center;
+  gap: 1rem ;
+}
+
+@media screen and (max-width: 600px) {
+  .task-container {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+}

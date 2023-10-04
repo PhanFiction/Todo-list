@@ -1,0 +1,5 @@
+.week-section {
+  display: flex;
+  flex-direction: column;
+  margin: var(--desktop-margin);
+}

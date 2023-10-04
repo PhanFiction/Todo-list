@@ -1,27 +1,14 @@
 .home-section {
   display: flex;
   flex-direction: column;
-  padding: 2rem;
-  margin: 1rem;
   width: 100%;
+  margin: var(--desktop-margin);
+  overflow: scroll;
+  height: 70vh;
 }
 
-.todo-container {
-  background-color: beige;
-  padding: 1rem 1.5rem 1rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.todo-container label {
-  display: flex;
-  gap: 1rem;
-  scale: 1.2;
-}
-
-.task-items {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+@media screen and (max-width: 600px) {
+  .home-section {
+    margin: var(--mobile-margin);
+  }
 }

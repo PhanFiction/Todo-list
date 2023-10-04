@@ -11,9 +11,12 @@
   --color-secondary-dark: #444;
   --font-inclusive-sans: 'Inclusive Sans';
   --font-lato: 'Lato';
+  --fa-size-xl: 3rem;
   --fa-size-lg: 2rem;
   --fa-size-md: 1.5rem;
   --fa-size-sm: 1rem;
+  --desktop-margin: 2.5rem;
+  --mobile-margin: 1rem;
 }
 
 body {

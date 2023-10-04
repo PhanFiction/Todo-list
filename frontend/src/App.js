@@ -4,7 +4,7 @@ import Home from './pages/Home/Home';
 import Projects from './pages/Projects/Projects';
 import Today from './pages/Today/Today';
 import Week from './pages/Week/Week';
-import Task from './pages/Task/Task';
+import TaskPage from './pages/TaskPage/TaskPage';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import CreateTask from './pages/CreateTask/CreateTask';
@@ -25,8 +25,8 @@ function App() {
             <Route path="/projects" component={Projects} />
             <Route exact path="/today" component={Today} />
             <Route exact path="/week" component={Week} />
-            <Route exact path="/task/:id" component={Task}/>
-            <Route exact path="/create-task" component={CreateTask}/> 
+            <Route exact path="/task/:id" component={TaskPage}/>
+            <Route exact path="/create-task" component={CreateTask}/>
             <Route exact path="/" component={Home} />
           </Switch>
         <Footer />

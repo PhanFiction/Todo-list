@@ -1,6 +1,7 @@
-import { faHouse, faCalendarDay, faCalendarWeek } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faCalendarDay, faCalendarWeek, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import FaIcon from '../FaIcon/FaIcon';
 import LinkRoute from '../LinkRoute/LinkRoute';
+import Button from '../Button/Button';
 import './Nav.css';
 import { useState } from 'react';
 
@@ -17,9 +18,24 @@ const projects = [
     id: 1,
   },
   {
-    name: 'Project 1',
+    name: 'Project 2',
     to: '/task/2',
     id: 2,
+  },
+  {
+    name: 'Project 3',
+    to: '/task/3',
+    id: 3,
+  },
+  {
+    name: 'Project 4',
+    to: '/task/4',
+    id: 4,
+  },
+  {
+    name: 'Project 5',
+    to: '/task/5',
+    id: 5,
   },
 ]
 
@@ -69,11 +85,13 @@ const Nav = () => {
               </li>
               )
             }
-            <button onClick={addProject}>
+            <div className="btn-container">
               <LinkRoute to="/create-task">
-                Add Task
+                <Button>
+                  <FaIcon iconName={faCirclePlus} size="xl"/>
+                </Button>
               </LinkRoute>
-            </button>
+            </div>
           </ul>
         </aside>
       </nav>
@@ -117,10 +135,10 @@ const Nav = () => {
                 </li>
                 )
               }
-              <button onClick={addProject}>
-                <LinkRoute to="/create-task">
-                  Add Task
-                </LinkRoute>
+              <button className="add-btn" onClick={addProject}>
+                <FaIcon iconName={faCirclePlus} size="xl">
+                  <LinkRoute to="/create-task" />
+                </FaIcon>
               </button>
             </ul>
           </aside>

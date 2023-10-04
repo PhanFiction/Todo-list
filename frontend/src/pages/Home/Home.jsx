@@ -1,21 +1,63 @@
 import './Home.css';
-import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import FaIcon from '../../components/FaIcon/FaIcon';
+import Task from '../../components/Task/Task';
+import { useState, useEffect } from 'react';
+
+const fakeApi = [
+  {
+    name: 'Cook Pasta',
+    completed: false,
+    id: 1,
+  },
+  {
+    name: 'Get Groceries',
+    completed: true,
+    id: 2,
+  },
+  {
+    name: 'Get Pasta ingredients and chocolates from safeway',
+    completed: false,
+    id: 3,
+  },
+  {
+    name: 'Buy cookies',
+    completed: false,
+    id: 4,
+  },
+  {
+    name: 'Look up form page',
+    completed: true,
+    id: 5,
+  },
+  {
+    name: 'Learn angular',
+    completed: true,
+    id: 6,
+  }
+]
 
 const Home = () => {
+  const [taskData, setTaskData] = useState(null);
+
+  useEffect(() => {
+    setTaskData(fakeApi);
+  },[])
+
+  if(taskData === null) return(<></>);
+
   return(
     <section className="home-section">
-      <div className="todo-container">
-        <label>
-          <input type="checkbox" />
-          Cook dinner
-        </label>
-        <div className="task-items">
-          <button>Details</button>
-          <FaIcon iconName={faPenToSquare} size="sm"/>
-          <FaIcon iconName={faTrashCan} size="sm"/>
-        </div>
-      </div>
+      {
+        taskData.map(item => 
+          <Task completed={item.completed} 
+            key={item.id} 
+            taskId={item.id} 
+            taskData={taskData}
+            setTaskData={setTaskData}
+          > 
+            {item.name} 
+          </Task>
+        )
+      }
     </section>
   )
 };
