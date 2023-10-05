@@ -1,0 +1,48 @@
+.task-container {
+  background-color: beige;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
+.border-l-orange {
+  border-left: 3px solid orange;
+}
+
+.border-l-green {
+  border-left: 3px solid green;
+}
+
+.border-l-blue {
+  border-left: 3px solid blue;
+}
+
+.border-l-red {
+  border-left: 3px solid red;
+}
+
+.task-items {
+  display: flex;
+  align-items: center;
+  gap: 1rem ;
+}
+
+.task-container:hover {
+  -webkit-transform: scale(1.003);
+  transform: scale(1.003);
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all .2s ease-out;
+  transition: all .2s ease-out;
+}
+
+@media screen and (max-width: 600px) {
+  .task-container {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+}

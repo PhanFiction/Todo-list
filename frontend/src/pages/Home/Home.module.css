@@ -1,0 +1,13 @@
+.home-section {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: 80vh;
+  margin: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .home-section {
+    margin: var(--mobile-margin);
+  }
+}

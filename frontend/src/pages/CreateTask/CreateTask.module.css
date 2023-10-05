@@ -1,0 +1,47 @@
+.create-task-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.create-task-container {
+  width: 100%;
+}
+
+.create-task-form-container {
+  width: 100%;
+  padding: 1.5rem;
+} 
+
+.create-task-select {
+  display: flex;
+  align-items: center;
+}
+
+.create-task-items, .create-task-label {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .create-task-page {
+    margin: 1.5rem;
+  }
+  .create-task-container {
+    flex-direction: column;
+  }
+}
+
+.create-task-select {
+  flex-direction: row;
+  gap: 1rem;
+}
+
+@media screen and (max-width: 400px) {
+  .create-task-section {
+    margin: 1.5rem;
+  }
+}

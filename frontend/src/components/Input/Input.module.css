@@ -1,0 +1,25 @@
+.input, .remove-border-outline {
+  border-radius: var(--b-radius-sm);
+  margin-top: .5rem;
+  padding: .7rem;
+  letter-spacing: .1rem;
+  border-radius: .5rem;
+}
+
+.remove-border-outline {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.remove-border-outline:active, .remove-border-outline:focus, .input:active, .input:focus {
+  border-color: transparent;
+  border-bottom: 1px solid;
+  border-color: var(--color-magenta);
+}
+
+@media screen and (max-width: 768px) {
+  .input, .remove-border-outline {
+    padding: .5rem;
+  }
+}

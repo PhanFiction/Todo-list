@@ -1,0 +1,97 @@
+aside::-webkit-scrollbar, .project-container::-webkit-scrollbar {
+  display: none;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+}
+
+.burger{
+  width: 15px;
+  height: 5px;
+  margin: .05rem;
+  background-color: var(--color-black);
+}
+
+.hide-nav {
+  width: 0;
+}
+
+aside {
+  display: flex;
+  background-color: var(--color-old-lace);
+  flex-direction: column;
+  width: 200px;
+  min-width: 150px;
+}
+
+aside ul, aside .project-container {
+  text-align: left;
+  padding: .5rem 1rem;
+}
+
+.project-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow: scroll;
+  height: 250px;
+}
+
+aside ul {
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
+aside ul li {
+  list-style: none;
+  color: var(--color-white);
+  padding: 1rem;
+}
+
+aside ul li:hover {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-box-shadow: 0px 5px 3px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 5px 3px 0px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all .2s ease-out;
+  transition: all .2s ease-out;
+}
+
+.toggle-menu {
+  display: block;
+}
+
+.btn-container {
+  margin-left: 2rem;
+}
+
+@media screen and (min-width: 600px) {
+  .hamburger {
+    display: none;
+  }
+
+  .desktop {
+    display: block;
+  }
+
+  .mobile {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  aside ul {
+    margin-top: 1.5rem;
+  }
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+}

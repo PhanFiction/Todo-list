@@ -6,8 +6,8 @@ import Today from './pages/Today/Today';
 import Week from './pages/Week/Week';
 import TaskPage from './pages/TaskPage/TaskPage';
 import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
 import CreateTask from './pages/CreateTask/CreateTask';
+import CreateProject from './pages/CreateProject/CreateProject';
 
 import {
   Switch,
@@ -23,13 +23,13 @@ function App() {
         <Nav />
           <Switch>
             <Route path="/projects" component={Projects} />
-            <Route exact path="/today" component={Today} />
             <Route exact path="/week" component={Week} />
             <Route exact path="/task/:id" component={TaskPage}/>
             <Route exact path="/create-task" component={CreateTask}/>
+            <Route path="/today" component={Today} />
+            <Route exact path="/create-project" component={CreateProject}/>
             <Route exact path="/" component={Home} />
           </Switch>
-        <Footer />
       </div>
     </>
   );

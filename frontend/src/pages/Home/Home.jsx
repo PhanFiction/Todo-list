@@ -1,5 +1,6 @@
-import './Home.css';
+import styles from './Home.module.css';
 import Task from '../../components/Task/Task';
+import Page from '../../components/Page/Page';
 import { useState, useEffect } from 'react';
 
 const fakeApi = [
@@ -32,7 +33,22 @@ const fakeApi = [
     name: 'Learn angular',
     completed: true,
     id: 6,
-  }
+  },
+  {
+    name: 'Learn Vue',
+    completed: true,
+    id: 7,
+  },
+  {
+    name: 'Learn React',
+    completed: true,
+    id: 8,
+  },
+  {
+    name: 'Learn Math',
+    completed: true,
+    id: 9,
+  },
 ]
 
 const Home = () => {
@@ -45,20 +61,22 @@ const Home = () => {
   if(taskData === null) return(<></>);
 
   return(
-    <section className="home-section">
-      {
-        taskData.map(item => 
-          <Task completed={item.completed} 
-            key={item.id} 
-            taskId={item.id} 
-            taskData={taskData}
-            setTaskData={setTaskData}
-          > 
-            {item.name} 
-          </Task>
-        )
-      }
-    </section>
+    <Page>
+      <div className={styles['home-section']}>
+        {
+          taskData.map(item =>
+            <Task completed={item.completed}
+              key={item.id}
+              taskId={item.id}
+              taskData={taskData}
+              setTaskData={setTaskData}
+            >
+              {item.name}
+            </Task>
+          )
+        }
+      </div>
+    </Page>
   )
 };
 

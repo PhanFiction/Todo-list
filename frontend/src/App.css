@@ -1,4 +1,5 @@
 .page-layout {
   display: flex;
   min-height: calc(100vh - 104px - 48px);
+  width: 100%;
 }

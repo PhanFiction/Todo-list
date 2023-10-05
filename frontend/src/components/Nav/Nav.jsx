@@ -2,14 +2,8 @@ import { faHouse, faCalendarDay, faCalendarWeek, faCirclePlus } from '@fortaweso
 import FaIcon from '../FaIcon/FaIcon';
 import LinkRoute from '../LinkRoute/LinkRoute';
 import Button from '../Button/Button';
-import './Nav.css';
+import styles from './Nav.module.css';
 import { useState } from 'react';
-
-const links = [
-  {
-
-  }
-]
 
 const projects = [
   {
@@ -37,6 +31,11 @@ const projects = [
     to: '/task/5',
     id: 5,
   },
+  {
+    name: 'Project 6',
+    to: '/task/6',
+    id: 6,
+  },
 ]
 
 const Nav = () => {
@@ -52,13 +51,13 @@ const Nav = () => {
 
   return(
     <>
-      <nav className="desktop">
+      <nav className={styles.desktop}>
         <aside>
           <ul>
             <li>
               <LinkRoute to='/'>
                 <FaIcon iconName={faHouse} size="sm"/>
-                  Home
+                Home
               </LinkRoute>
             </li>
             <li>
@@ -74,41 +73,41 @@ const Nav = () => {
               </LinkRoute>
             </li>
           </ul>
-          <ul className="project-list">
+          <ul>
             <h1>Projects</h1>
-            {
-              projects.map((item, index) =>
-              <li key={item.id}>
-                <LinkRoute to={item.to}>
-                  {item.name}
-                </LinkRoute>
-              </li>
-              )
-            }
-            <div className="btn-container">
-              <LinkRoute to="/create-task">
-                <Button>
-                  <FaIcon iconName={faCirclePlus} size="xl"/>
-                </Button>
-              </LinkRoute>
+            <LinkRoute to="/create-project">
+              <button className={styles.button}>Add Task</button>
+            </LinkRoute>
+            <div className={styles['project-container']}>
+              {projects.map((item, index) => (
+                <li key={item.id}>
+                  <LinkRoute to={item.to}>{item.name}</LinkRoute>
+                </li>
+              ))}
             </div>
           </ul>
+          <div className={styles['btn-container']}>
+            <LinkRoute to="/create-task">
+              <Button>
+                <FaIcon iconName={faCirclePlus} size="xl"/>
+              </Button>
+            </LinkRoute>
+          </div>
         </aside>
       </nav>
-      <nav className="mobile">
-        <div className="hamburger" onClick={toggleMenu}>
-          <div className="burger"></div>
-          <div className="burger"></div>
-          <div className="burger"></div>
+      <nav className={styles.mobile}>
+        <div className={styles.hamburger} onClick={toggleMenu}>
+          <div className={styles.burger}></div>
+          <div className={styles.burger}></div>
+          <div className={styles.burger}></div>
         </div>
-          {
-            toggle === true ? 
-          <aside className={toggle === true ? 'nav' : 'hide-nav'}>
+        {toggle === true ? (
+          <aside className={toggle === true ? styles.nav : styles['hide-nav']}>
             <ul>
               <li>
                 <LinkRoute to='/'>
                   <FaIcon iconName={faHouse} size="sm"/>
-                    Home
+                  Home
                 </LinkRoute>
               </li>
               <li>
@@ -124,26 +123,27 @@ const Nav = () => {
                 </LinkRoute>
               </li>
             </ul>
-            <ul className="project-list">
+            <ul>
               <h1>Projects</h1>
-              {
-                projects.map((item, index) =>
-                <li key={item.id}>
-                  <LinkRoute to={item.to}>
-                    {item.name}
-                  </LinkRoute>
-                </li>
-                )
-              }
-              <button className="add-btn" onClick={addProject}>
-                <FaIcon iconName={faCirclePlus} size="xl">
-                  <LinkRoute to="/create-task" />
-                </FaIcon>
-              </button>
+              <div className={styles['project-container']}>
+                {projects.map((item, index) => (
+                  <li key={item.id}>
+                    <LinkRoute to={item.to}>{item.name}</LinkRoute>
+                  </li>
+                ))}
+              </div>
+              <div className={styles['btn-container']}>
+                <LinkRoute to="/create-task">
+                  <Button>
+                    <FaIcon iconName={faCirclePlus} size="xl"/>
+                  </Button>
+                </LinkRoute>
+              </div>
             </ul>
           </aside>
-            : <></>
-          }
+        ) : (
+          <></>
+        )}
       </nav>
     </>
   )

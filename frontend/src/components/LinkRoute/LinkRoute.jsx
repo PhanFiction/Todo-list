@@ -1,4 +1,4 @@
-import './LinkRoute.css';
+import styles from './LinkRoute.module.css';
 import {
   Link, useLocation,
 } from "react-router-dom";
@@ -12,8 +12,8 @@ const LinkRoute = ({ to, children }) => {
   }
 
   return (
-    <Link className={isActiveRoute(`${to}`, pathname) ? 'link active' : 'link'} to={to}>
-      { children }
+    <Link className={`${styles.link} ${isActiveRoute(to, pathname) ? styles.active : ''}`} to={to}>
+      {children}
     </Link>
   )
 }

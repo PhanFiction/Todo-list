@@ -1,0 +1,10 @@
+.page-container::-webkit-scrollbar {
+  display: none;
+}
+
+.page-container{
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  width: 100%;
+}

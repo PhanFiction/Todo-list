@@ -1,10 +1,12 @@
-import './CheckBox.css';
+import styles from './CheckBox.module.css';
 
 const CheckBox = ({ completed, handleCompleted, children }) => {
   return (
-    <label className={completed === true ? 'label completed' : 'label not-completed'}>
-      <input type="checkbox" onChange={handleCompleted}/>
-      { children }
+    <label
+      className={`${styles['checkbox-label']} ${completed ? styles.completed : styles['not-completed']}`}
+    >
+      <input type="checkbox" onChange={handleCompleted} />
+      {children}
     </label>
   )
 }

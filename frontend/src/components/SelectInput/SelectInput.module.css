@@ -1,0 +1,23 @@
+.select {
+  border-radius: var(--b-radius-sm);
+  margin-top: .5rem;
+  padding: .5rem;
+  letter-spacing: .1rem;
+  border-radius: .5rem;
+  padding: .8rem;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+}
+
+.select:focus {
+  outline: 1px solid blue;
+}
+
+@media screen and (max-width: 768px) {
+  .select {
+    padding: 0rem;
+    text-indent: 5px;
+  }
+}

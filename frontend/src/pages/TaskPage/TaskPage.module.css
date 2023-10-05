@@ -1,0 +1,47 @@
+.task-page-container, .task-item-container {
+  margin: var(--desktop-margin);
+}
+
+.task-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.task-page-container {
+  margin-top: 7.5rem;
+  width: 60%;
+}
+
+.task-item-container h2 {
+  font-size: 2.7rem;
+}
+
+.task-item {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin-top: .75rem;
+  font-size: 1.2rem;
+}
+
+.task-item li:first-child {
+  font-weight: 700;
+}
+
+@media screen and (max-width: 1024px) {
+  .task-page-container {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .task-item-container h2 {
+    font-size: 2.2rem;
+  }
+
+  .task-item {
+    font-size: 1rem;
+  }
+}

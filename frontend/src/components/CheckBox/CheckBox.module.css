@@ -1,4 +1,4 @@
-.label {
+.checkbox-label {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -16,13 +16,13 @@
 }
 
 @media screen and (max-width: 769px) {
-  .label {
+  .checkbox-label {
     width: 60%;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .label {
+  .checkbox-label {
     width: 45%;
   }
 }

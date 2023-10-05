@@ -1,0 +1,13 @@
+.fa-size-sm {
+  font-size: var(--fa-size-sm);
+}
+.fa-size-md {
+  font-size: var(--fa-size-md);
+}
+.fa-size-lg {
+  font-size: var(--fa-size-lg);
+}
+
+.fa-size-xl {
+  font-size: var(--fa-size-xl);
+}
