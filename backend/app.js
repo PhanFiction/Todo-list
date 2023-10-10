@@ -5,13 +5,14 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config/config');
 const authRoutes = require('./routes/authRoutes');
-const pinRoutes = require('./routes/pinRoutes');
+const projectRoutes = require('./routes/projectRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 const mongoose = require('mongoose');
 
 app.use(
   cors({
-    origin: config.PORT,
-    methods:['GET','POST'],
+    origin: `http://localhost:${config.CLIENT_PORT}`,
+    methods: ['Get', 'Post', 'Put', 'Delete'],
     credentials: true,
   })
 );
@@ -27,6 +28,7 @@ mongoose.connect(config.databaseURL)
 app.use(express.json());
 
 app.use('/', authRoutes);
-app.use('/pin', pinRoutes);
+app.use('/project', projectRoutes);
+app.use('/task', taskRoutes);
 
 module.exports = app;
