@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const projectSchema = new mongoose.Schema({ 
   title: {
     type: String,
-    default: '',
+    default: 'Inbox',
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
@@ -20,4 +20,4 @@ const projectSchema = new mongoose.Schema({
 
 const Project = mongoose.model('Project', projectSchema);
 
-module.exports = Projects;
+module.exports = Project;

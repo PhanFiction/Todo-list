@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const Project = require('../models/Project');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
@@ -9,13 +10,13 @@ exports.login = async (req, res) => {
   if (!errors.isEmpty()) {
     const errorMessages = errors.array().map(error => error.msg);
     return res.status(401).json({
-        errors: errorMessages
+      errors: errorMessages
     });
   };
 
   const { username, password } = req.body;
   const user = await User.findOne({username});
-  // compare password from post and db
+  // compare password from body and db
   const passwordCorrect = (user) === null ? false : await bcrypt.compare(password, user.passwordHash); 
 
   // if user not found, return error of 401 
@@ -34,7 +35,7 @@ exports.login = async (req, res) => {
       .cookie('authToken', token, {maxAge: oneDay}, { httpOnly: true })
       .status(201)
       .send({success: 'logged in successfully', redirectURL: '/', token});
-  }catch(error){
+  } catch(error) {
     res.send({'error': error})
   }
 };
@@ -44,32 +45,42 @@ exports.signUp = async (req, res) => {
   if (!errors.isEmpty()) {
     const errorMessages = errors.array().map(error => error.msg);
     return res.status(401).json({
-        errors: errorMessages
+      errors: errorMessages
     });
   }
-  const { username, name, password, email } = req.body;
+
+  const { username, password } = req.body;
 
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
-  // create new user and store password hash
+   // create new user and store password hash
   const user = new User({
     username,
-    name,
-    email,
     passwordHash,
+    tasks: [],
   });
 
-  try{
+  const project = new Project({
+    title: 'Inbox',
+    creator: user._id,
+    tasks: [],
+  });
+
+  try {
+    user.projects.push(project._id);
     await user.save();
-    res
-      .status(201)
-      .send({success: 'created account successfully', redirectURL: '/'});
-  }catch(error){
-      res.status(401).send(error);
-  };
+    await project.save();
+    res.status(201).send({success: 'created account successfully', redirectURL: '/login'});
+  } catch(error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
 };
 
 exports.logout = async (req, res) => {
-  res.clearCookie('session_id').send({success: 'successly logged out', redirectURL: '/'});
+  try {
+    res.clearCookie('authToken').send({success: 'successly logged out', redirectURL: '/login'});
+  } catch(error) {
+    res.send({error: 'unable to logout'});
+  }
 };

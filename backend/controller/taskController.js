@@ -1,5 +1,6 @@
 const Task = require('../models/Task');
 const User = require('../models/User');
+const Project = require('../models/Project');
 const verifyToken = require('../utils/verifyToken');
 const convertIdToString = require('../utils/idToString');
 
@@ -29,10 +30,13 @@ exports.getSingleTask = async (req, res) => {
 
 // create a new task
 exports.createTask = async (req, res) => {
-  const { title, description, priority, dueDate } = req.body;
+  const { title, description, priority, dueDate, projectId } = req.body;
 
   const cookie = cookieExtractor(req);
   const decodedToken = verifyToken(cookie);
+
+  const foundProject = await Project.findById(projectId);
+  if(!foundProject) return res.status(401).send({error: 'Project not found'});
 
   const foundUser = await User.findById(decodedToken.id);
   if (!foundUser) return res.status(401).send({error: 'User not found'});
@@ -45,11 +49,15 @@ exports.createTask = async (req, res) => {
     priority,
     completed,
     dueDate,
+    projects: [projectId],
   });
+
   try {
     const savedTask = await newTask.save();
     const taskStringId = convertIdToString(savedTask._id);
     foundUser.tasks.push(taskStringId);
+    foundProject.tasks.push(taskStringId);
+    await foundProject.save();
     await foundUser.save();
     res.status(201).send({success: 'task created', taskId: taskStringId});
   } catch(error) {
@@ -103,6 +111,11 @@ exports.deleteTask = async (req, res) => {
     if (!decodedToken) return res.status(403).json({ error: 'Not authorized' });
     if (!foundUser) return res.status(403).json({ error: 'User not found' });
     if (foundTask.creator.toString() !== decodedToken.id) return res.status(403).json({ error: 'Not authorized' });
+
+    const foundProject = await Project.find(foundTask.project);
+
+    // Delete the task id in project
+    foundProject.tasks = foundProject.tasks.filter((taskId) => taskId.toString() !== taskId);
     
     // Delete the task from the database
     await Task.findByIdAndDelete(taskId);

@@ -24,6 +24,11 @@ const taskSchema = new mongoose.Schema({
   dueDate: {
     type: Date,
     default: Date.now()
+  },
+  project: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Project",
+    default: 'Inbox',
   }
 });
 

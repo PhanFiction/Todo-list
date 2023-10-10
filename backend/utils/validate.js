@@ -1,16 +1,6 @@
 const { check } = require('express-validator');
 
 exports.validateSignUpCredentials = [
-  check('name')
-    .trim()
-    .escape()
-    .not()
-    .isEmpty()
-    .withMessage('name can not be empty!')
-    .bail()
-    .isLength({min: 3})
-    .withMessage('Minimum 3 characters required!')
-    .bail(),
   check('username')
     .trim()
     .escape()
