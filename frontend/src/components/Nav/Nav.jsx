@@ -1,48 +1,46 @@
-import { faHouse, faCalendarDay, faCalendarWeek, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from 'react';
+import { faHouse, faCalendarDay, faCalendarWeek, faCirclePlus, faSignOut, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import FaIcon from '../FaIcon/FaIcon';
 import LinkRoute from '../LinkRoute/LinkRoute';
 import Button from '../Button/Button';
 import styles from './Nav.module.css';
-import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+const authService = require('../../services/auth');
+const projectService = require('../../services/project');
 
-const projects = [
-  {
-    name: 'Project 1',
-    to: '/task/1',
-    id: 1,
-  },
-  {
-    name: 'Project 2',
-    to: '/task/2',
-    id: 2,
-  },
-  {
-    name: 'Project 3',
-    to: '/task/3',
-    id: 3,
-  },
-  {
-    name: 'Project 4',
-    to: '/task/4',
-    id: 4,
-  },
-  {
-    name: 'Project 5',
-    to: '/task/5',
-    id: 5,
-  },
-  {
-    name: 'Project 6',
-    to: '/task/6',
-    id: 6,
-  },
-]
-
-const Nav = () => {
+const Nav = ({ setIsAuth }) => {
   const [toggle, setToggle] = useState(false);
+  const [projects, setProjects] = useState([]);
+  const history = useHistory();
 
-  const addProject = () => {
-    return null;
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const req = await projectService.getAllProjects();
+        console.log(req);
+        // Do something with the result if needed
+        setProjects(req.data);
+      } catch (error) {
+        // Handle any errors here
+        console.error(error);
+      }
+    };
+    fetchProjects();
+  }, [])
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await authService.logout();
+      setIsAuth(false);
+      history.push(`${res.redirectURL}`)
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
+  const handleDelete = async (itemId) => {
+    console.log(itemId);
   }
 
   const toggleMenu = () => {
@@ -72,16 +70,27 @@ const Nav = () => {
                 This week
               </LinkRoute>
             </li>
+            <li onClick={handleLogout}>
+              <FaIcon iconName={faSignOut} size="sm"/>
+              Logout
+            </li>
           </ul>
           <ul>
             <h1>Projects</h1>
             <LinkRoute to="/create-project">
-              <button className={styles.button}>Add Task</button>
+              <Button noBorder={false}>
+                Add project
+              </Button>
             </LinkRoute>
             <div className={styles['project-container']}>
-              {projects.map((item, index) => (
-                <li key={item.id}>
-                  <LinkRoute to={item.to}>{item.name}</LinkRoute>
+              {projects.map(item => (
+                <li className={styles['items']} key={item._id}>
+                  <LinkRoute to={item._id}>{item.title}</LinkRoute>
+                  <Button
+                    handleClick={() => handleDelete(item._id)}
+                  >
+                    <FaIcon iconName={faTrashCan} size="sm" />
+                  </Button>
                 </li>
               ))}
             </div>
@@ -122,13 +131,20 @@ const Nav = () => {
                   This week
                 </LinkRoute>
               </li>
+              <li onClick={handleLogout}>
+                <FaIcon iconName={faSignOut} size="sm"/>
+                Logout
+              </li>
             </ul>
             <ul>
               <h1>Projects</h1>
               <div className={styles['project-container']}>
-                {projects.map((item, index) => (
-                  <li key={item.id}>
-                    <LinkRoute to={item.to}>{item.name}</LinkRoute>
+                {projects.map(item => (
+                  <li className={styles['items']} key={item._id}>
+                    <LinkRoute to={item._id}>{item.title}</LinkRoute>
+                    <Button handleClick={() => handleDelete(item._id)}>
+                      <FaIcon iconName={faTrashCan} size="sm" onClick={handleDelete} />
+                    </Button>
                   </li>
                 ))}
               </div>

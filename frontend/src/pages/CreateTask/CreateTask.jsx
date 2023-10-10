@@ -1,58 +1,60 @@
+import React, { useState } from 'react';
 import styles from './CreateTask.module.css';
-import Card from '../../components/Card/Card';
-import Label from '../../components/Label/Label';
-import Input from '../../components/Input/Input';
-import Button from '../../components/Button/Button';
 import Page from '../../components/Page/Page';
-import SelectInput from '../../components/SelectInput/SelectInput';
+import TaskForm from '../../components/TaskForm/TaskForm';
 
 const CreateTask = () => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [priority, setPriority] = useState('');
+  const [project, setProject] = useState('Inbox');
+  const [dueDate, setDueDate] = useState('');
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  }
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  }
+
+  const handlePriorityChange = (e) => {
+    setPriority(e.target.value);
+  };
+
+  const handleProjectChange = (e) => {
+    setProject(e.target.value);
+  }
+
+  const handleDueDateChange = (e) => {
+    setDueDate(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('due date', dueDate, ' project ', project, ' title ', title, ' priotity ', priority, ' description ', description);
+  }
+
+
   return(
     <Page>
       <div className={styles["create-task-page"]}>
         <div className={styles["create-task-container"]}>
-          <Card>
-            <div className={styles["create-task-form-container"]}>
-              <div className={styles["create-task-items"]}>
-                <div className={styles["create-task-label"]}>
-                  <Label>
-                    <Input name={"title"} text="Title" noBorderOutline={true}>
-                      Title
-                    </Input>
-                  </Label>
-                </div>
-                <div className={styles["create-task-label"]}>
-                  <Label>
-                    <Input name={"description"} text="Description" noBorderOutline={true}>
-                      Description
-                    </Input>
-                  </Label>
-                </div>
-              </div>
-              <div className={styles["create-task-items"]}>
-                <div className={styles["create-task-label"]}>
-                  <Label>
-                    <Input name={"description"} text="description" type={"datetime-local"} noBorderOutline={true}>
-                      Due Date
-                    </Input>
-                  </Label>
-                </div>
-                <div className={styles["create-task-select"]}>
-                  <Label name={"priority"} text="Priority" noBorderOutline={true}>
-                    Priority
-                    <SelectInput />
-                  </Label>
-                  <Label name={"projects"} text="projects" noBorderOutline={true}>
-                    Projects
-                    <SelectInput />
-                  </Label>
-                </div>
-                <Button noBorder={false}>
-                  Add Task
-                </Button>
-              </div>
-            </div>
-          </Card>
+          <TaskForm
+            title={title}
+            description={description}
+            priority={priority}
+            project={project}
+            dueDate={dueDate}
+            titleChange={handleTitleChange}
+            descriptionChange={handleDescriptionChange}
+            priorityChange={handlePriorityChange}
+            projectChange={handleProjectChange}
+            dueDateChange={handleDueDateChange}
+            handleSubmit={handleSubmit}
+          >
+            <h1>New Task</h1>
+          </TaskForm>
         </div>
       </div>
     </Page>

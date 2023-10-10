@@ -1,6 +1,5 @@
 .input, .remove-border-outline {
   border-radius: var(--b-radius-sm);
-  margin-top: .5rem;
   padding: .7rem;
   letter-spacing: .1rem;
   border-radius: .5rem;

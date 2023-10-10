@@ -1,0 +1,40 @@
+.task-form-container {
+  display: flex;
+  text-align: left;
+  padding: 1.5rem;
+  gap: 2rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.form-input-container {
+  flex-grow: 1 auto;
+}
+
+.form-select-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.task-form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.task-form-select {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .task-form-container {
+    flex-direction: column;
+  }
+  
+  .task-form-container h1 {
+    text-align: center;
+  }
+}

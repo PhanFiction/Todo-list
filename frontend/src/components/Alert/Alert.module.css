@@ -1,0 +1,51 @@
+.alert-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  top: 0%;
+  position: fixed;
+  width: 100%;
+}
+
+.alert {
+  min-width: 60%;
+  height: auto;
+  padding: 1rem;
+  margin: 1rem;
+  line-height: 1.8;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-weight: 400;
+}
+.clear {
+  clear: both;
+}
+
+.alertCheckbox {
+  display: none;
+}
+
+.alert:checked + .alert {
+  display: none;
+}
+
+.alertText {
+  display: table;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 16px;
+}
+
+.alertClose {
+  float: right;
+  padding-top: 5px;
+  font-size: 10px;
+}
+
+.error {
+  background-color: #FEE;
+  border: 1px solid #EDD;
+  color: #A66;
+}

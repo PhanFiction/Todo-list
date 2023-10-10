@@ -2,6 +2,9 @@ import styles from './Home.module.css';
 import Task from '../../components/Task/Task';
 import Page from '../../components/Page/Page';
 import { useState, useEffect } from 'react';
+import {
+  Redirect,
+} from "react-router-dom";
 
 const fakeApi = [
   {
@@ -51,12 +54,12 @@ const fakeApi = [
   },
 ]
 
-const Home = () => {
+const Home = ({ isAuth }) => {
   const [taskData, setTaskData] = useState(null);
 
   useEffect(() => {
     setTaskData(fakeApi);
-  },[])
+  },[]);
 
   if(taskData === null) return(<></>);
 

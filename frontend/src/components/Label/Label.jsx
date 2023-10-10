@@ -3,7 +3,7 @@ import styles from './Label.module.css';
 const Label = ({ children }) => {
   return (
     <>
-      <label className={`${styles.label}`}/>
+      <label className={`${styles.label}`} />
       { children }
     </>
   )

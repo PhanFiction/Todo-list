@@ -61,6 +61,20 @@ aside ul li:hover {
   transition: all .2s ease-out;
 }
 
+aside ul li:last-child {
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .toggle-menu {
   display: block;
 }

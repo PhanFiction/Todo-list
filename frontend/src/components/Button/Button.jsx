@@ -1,6 +1,6 @@
 import styles from './Button.module.css';
 
-const Button = ({ children, noBorder=true, handleClick}) => {
+const Button = ({ children, noBorder=true, handleClick=null}) => {
   return(
     <button
       onClick={handleClick}
