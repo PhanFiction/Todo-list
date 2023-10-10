@@ -8,7 +8,7 @@ import LinkRoute from '../../components/LinkRoute/LinkRoute';
 import { useHistory, Redirect } from 'react-router-dom';
 const authService = require('../../services/auth');
 
-const Login = ({ isAuth, setIsAuth, setAlert }) => {
+const Login = ({ isAuth, setAuth, setAlert }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
@@ -20,6 +20,7 @@ const Login = ({ isAuth, setIsAuth, setAlert }) => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     const userCredentials = {
       username,
       password,
@@ -27,6 +28,7 @@ const Login = ({ isAuth, setIsAuth, setAlert }) => {
     try{
       const res = await authService.login(userCredentials);
       if (res.success) {
+        setAuth(true);
         history.push('/');
       }
     }catch(error){

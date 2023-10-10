@@ -49,6 +49,12 @@ span:hover {
   color: var(--color-magenta);
 }
 
+@media screen and (min-width: 1440px) {
+  .signup-container {
+    width: 40%;
+  }  
+}
+
 @media screen and (max-width: 768px) {
   .signup-section h1 {
     font-size: 1.7rem;

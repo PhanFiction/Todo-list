@@ -57,7 +57,7 @@ function App() {
       <div className="page-layout">
           <>
             <Route exact path="/signup" render={(props) => <SignUp {...props} isAuth={isAuth} setAlert={setAlert} />} />
-            <Route exact path="/login" render={(props) => <Login {...props} isAuth={isAuth} setAlert={setAlert} />} />
+            <Route exact path="/login" render={(props) => <Login {...props} setAuth={setIsAuth} isAuth={isAuth} setAlert={setAlert} />} />
             <PrivateRoute isAuth={isAuth}>
               <Nav setIsAuth={setIsAuth} />
               <Switch>

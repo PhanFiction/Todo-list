@@ -23,7 +23,6 @@ const CreateProject = ({ setAlert }) => {
       setAlert({'message': res.success});
 
     } catch (error) {
-      console.log(error);
       setAlert({'message': 'failed to create project'});
     }
   }

@@ -24,3 +24,16 @@ export const getProject = async (projectId) => {
   const response = await axios.get(`${process.env.REACT_APP_API}/project/${projectId}`, { withCredentials: true });
   return response.data;
 };
+
+export const deleteProject = async (projectId) => {
+  const response = await axios.delete(`${process.env.REACT_APP_API}/project/delete-project`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      projectId,
+    },
+    withCredentials: true,
+  });
+  return response.data;
+}

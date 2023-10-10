@@ -33,8 +33,7 @@ exports.createProject = async (req, res) => {
   const { title } = req.body;
 
   if(title.length < 3) return res.status(401).send({error: 'Title needs to be 3 characters long'});
-
-  const cookie = cookieExtractor(req);
+  //const cookie = cookieExtractor(req);
   const decodedToken = verifyToken(cookie);
 
   const foundUser = await User.findById(decodedToken.id);
@@ -57,11 +56,9 @@ exports.createProject = async (req, res) => {
     res.status(401).send({error: 'Could not create project'});
   }
 };
-
-
 exports.deleteProject = async (req, res) => {
-  const projectId = req.params.id;
-
+  const { projectId } = req.body;
+  
   try {
     const foundProject = await Project.findById(projectId);
 
@@ -74,6 +71,8 @@ exports.deleteProject = async (req, res) => {
     if (!decodedToken) return res.status(403).json({ error: 'Not authorized' });
     if (!foundUser) return res.status(403).json({ error: 'User not found' });
     if (foundProject.creator.toString() !== decodedToken.id) return res.status(403).json({ error: 'Not authorized' });
+
+    // await Task.deleteMany({ _id: { $in: foundProject.tasks } });
     
     // Delete the task from the database
     await Project.findByIdAndDelete(projectId);
@@ -84,7 +83,7 @@ exports.deleteProject = async (req, res) => {
     // Save the user
     await foundUser.save();
 
-    res.status(200).json({ success: 'Task deleted' });
+    res.status(200).json({ success: 'Project deleted' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });

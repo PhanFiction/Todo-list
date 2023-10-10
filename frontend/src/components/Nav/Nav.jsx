@@ -14,19 +14,18 @@ const Nav = ({ setIsAuth }) => {
   const history = useHistory();
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const req = await projectService.getAllProjects();
-        console.log(req);
-        // Do something with the result if needed
-        setProjects(req.data);
-      } catch (error) {
-        // Handle any errors here
-        console.error(error);
-      }
-    };
     fetchProjects();
-  }, [])
+  }, [setProjects]);
+
+  const fetchProjects = async () => {
+    try {
+      const req = await projectService.getAllProjects();
+      setProjects(req.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -40,7 +39,11 @@ const Nav = ({ setIsAuth }) => {
   }
 
   const handleDelete = async (itemId) => {
-    console.log(itemId);
+    const res = await projectService.deleteProject(itemId);
+    
+    if (res.success) {
+      fetchProjects();
+    }
   }
 
   const toggleMenu = () => {

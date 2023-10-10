@@ -12,7 +12,6 @@ const mongoose = require('mongoose');
 app.use(
   cors({
     origin: `http://localhost:${config.CLIENT_PORT}`,
-    methods: ['Get', 'Post', 'Put', 'Delete'],
     credentials: true,
   })
 );
