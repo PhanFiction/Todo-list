@@ -33,7 +33,8 @@ exports.createProject = async (req, res) => {
   const { title } = req.body;
 
   if(title.length < 3) return res.status(401).send({error: 'Title needs to be 3 characters long'});
-  //const cookie = cookieExtractor(req);
+  const cookie = cookieExtractor(req);
+  console.log(cookie);
   const decodedToken = verifyToken(cookie);
 
   const foundUser = await User.findById(decodedToken.id);
@@ -51,7 +52,12 @@ exports.createProject = async (req, res) => {
     const projectStringId = convertIdToString(savedProject._id);
     foundUser.projects.push(projectStringId);
     await foundUser.save();
-    res.status(201).send({success: 'Project created', projectId: projectStringId}); 
+    res.status(201).send({success: 'Project created', project: {
+      title: newProject.title,
+      _id: newProject._id,
+      tasks: newProject.tasks,
+    },
+  }); 
   } catch(error) {
     res.status(401).send({error: 'Could not create project'});
   }
@@ -83,9 +89,9 @@ exports.deleteProject = async (req, res) => {
     // Save the user
     await foundUser.save();
 
-    res.status(200).json({ success: 'Project deleted' });
+    res.status(200).send({ success: 'Project deleted' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).send({ error: 'Internal server error' });
   }
 };

@@ -8,24 +8,9 @@ import { useHistory } from 'react-router-dom';
 const authService = require('../../services/auth');
 const projectService = require('../../services/project');
 
-const Nav = ({ setIsAuth }) => {
+const Nav = ({ setIsAuth, setProjects, projects, setAlert }) => {
   const [toggle, setToggle] = useState(false);
-  const [projects, setProjects] = useState([]);
   const history = useHistory();
-
-  useEffect(() => {
-    fetchProjects();
-  }, [setProjects]);
-
-  const fetchProjects = async () => {
-    try {
-      const req = await projectService.getAllProjects();
-      setProjects(req.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -39,10 +24,15 @@ const Nav = ({ setIsAuth }) => {
   }
 
   const handleDelete = async (itemId) => {
-    const res = await projectService.deleteProject(itemId);
-    
-    if (res.success) {
-      fetchProjects();
+    try {
+      const res = await projectService.deleteProject(itemId);
+      if(res.success) {
+        setAlert({'message': res.success});
+        const newProjects = projects.filter(item => item._id !== itemId);
+        setProjects(newProjects);
+      }
+    } catch (error) {
+      setAlert({error: 'Failed to delete project'});
     }
   }
 

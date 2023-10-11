@@ -8,7 +8,7 @@ import Button from '../../components/Button/Button';
 
 const projectService = require('../../services/project');
 
-const CreateProject = ({ setAlert }) => {
+const CreateProject = ({ setAlert, setProjects }) => {
   const [title, setTitle] = useState('');
 
   const handleTitleChange = (e) => {
@@ -20,8 +20,9 @@ const CreateProject = ({ setAlert }) => {
     const newProject = { title };
     try {
       const res = await projectService.createProject(newProject);
+      console.log(res);
+      setProjects((prevProjects) => [...prevProjects, res.project]);
       setAlert({'message': res.success});
-
     } catch (error) {
       setAlert({'message': 'failed to create project'});
     }
