@@ -6,4 +6,7 @@
   padding-left: 1rem;
   align-items: center;
   gap: 1rem;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 }
