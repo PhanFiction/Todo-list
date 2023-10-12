@@ -5,6 +5,7 @@ import LinkRoute from '../LinkRoute/LinkRoute';
 import Button from '../Button/Button';
 import styles from './Nav.module.css';
 import { useHistory } from 'react-router-dom';
+
 const authService = require('../../services/auth');
 const projectService = require('../../services/project');
 
@@ -17,9 +18,10 @@ const Nav = ({ setIsAuth, setProjects, projects, setAlert }) => {
     try {
       const res = await authService.logout();
       setIsAuth(false);
+      setAlert({'message': res.success});
       history.push(`${res.redirectURL}`)
     } catch(error) {
-      console.log(error);
+      setAlert({'message': 'Failed to logout'});
     }
   }
 
@@ -76,11 +78,11 @@ const Nav = ({ setIsAuth, setProjects, projects, setAlert }) => {
               </Button>
             </LinkRoute>
             <div className={styles['project-container']}>
-              {projects.map(item => (
-                <li className={styles['items']} key={item._id}>
-                  <LinkRoute to={item._id}>{item.title}</LinkRoute>
+              {projects.map((project, index) => (
+                <li className={styles['items']} key={index}>
+                  <LinkRoute to={`/project/${project._id}`}>{project.title}</LinkRoute>
                   <Button
-                    handleClick={() => handleDelete(item._id)}
+                    handleClick={() => handleDelete(project._id)}
                   >
                     <FaIcon iconName={faTrashCan} size="sm" />
                   </Button>
@@ -131,24 +133,31 @@ const Nav = ({ setIsAuth, setProjects, projects, setAlert }) => {
             </ul>
             <ul>
               <h1>Projects</h1>
+              <LinkRoute to="/create-project">
+                <Button noBorder={false}>
+                  Add project
+                </Button>
+              </LinkRoute>
               <div className={styles['project-container']}>
-                {projects.map(item => (
-                  <li className={styles['items']} key={item._id}>
-                    <LinkRoute to={item._id}>{item.title}</LinkRoute>
-                    <Button handleClick={() => handleDelete(item._id)}>
-                      <FaIcon iconName={faTrashCan} size="sm" onClick={handleDelete} />
+                {projects.map(project => (
+                  <li className={styles['items']} key={project._id}>
+                    <LinkRoute to={`project/${project._id}`}>{project.title}</LinkRoute>
+                    <Button
+                      handleClick={() => handleDelete(project._id)}
+                    >
+                      <FaIcon iconName={faTrashCan} size="sm" />
                     </Button>
                   </li>
                 ))}
               </div>
-              <div className={styles['btn-container']}>
-                <LinkRoute to="/create-task">
-                  <Button>
-                    <FaIcon iconName={faCirclePlus} size="xl"/>
-                  </Button>
-                </LinkRoute>
-              </div>
             </ul>
+            <div className={styles['btn-container']}>
+              <LinkRoute to="/create-task">
+                <Button>
+                  <FaIcon iconName={faCirclePlus} size="xl"/>
+                </Button>
+              </LinkRoute>
+            </div>
           </aside>
         ) : (
           <></>

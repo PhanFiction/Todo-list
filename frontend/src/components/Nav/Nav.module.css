@@ -6,13 +6,17 @@ aside::-webkit-scrollbar, .project-container::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   position: fixed;
+  top: 30px;
+  left: auto;
+  right: 10px;
+  z-index: 2;
 }
 
 .burger{
   width: 15px;
   height: 5px;
-  margin: .05rem;
-  background-color: var(--color-black);
+  margin: .1rem;
+  background-color: var(--color-white);
 }
 
 .hide-nav {
@@ -20,11 +24,11 @@ aside::-webkit-scrollbar, .project-container::-webkit-scrollbar {
 }
 
 aside {
-  display: flex;
   background-color: var(--color-old-lace);
-  flex-direction: column;
   width: 200px;
   min-width: 150px;
+  height: 90vh;
+  margin-top: 5rem;
 }
 
 aside ul, aside .project-container {
@@ -36,12 +40,13 @@ aside ul, aside .project-container {
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow: scroll;
-  height: 250px;
 }
 
 aside ul {
-  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
   padding-left: 1rem;
+  justify-content: space-around;
 }
 
 aside ul li {
