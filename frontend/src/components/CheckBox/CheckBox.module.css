@@ -1,10 +1,10 @@
 .checkbox-label {
   display: flex;
-  align-items: center;
   gap: 1rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-weight: bolder;
 }
 
 .completed {
@@ -24,5 +24,7 @@
 @media screen and (max-width: 600px) {
   .checkbox-label {
     width: 45%;
+    font-size: .8rem;
+    gap: .2rem;
   }
 }
