@@ -24,7 +24,8 @@ exports.getAllProjects = async (req, res) => {
 // return a single project
 exports.getSingleProject = async (req, res) => {
   const projectId = req.params.id;
-  const foundProject = await Project.findById(projectId);
+  const foundProject = await Project.findById(projectId).populate('tasks');
+  if(!foundProject) return res.status(401).send({error: 'Project not found'});
   res.status(200).send(foundProject);
 };
 
@@ -34,7 +35,6 @@ exports.createProject = async (req, res) => {
 
   if(title.length < 3) return res.status(401).send({error: 'Title needs to be 3 characters long'});
   const cookie = cookieExtractor(req);
-  console.log(cookie);
   const decodedToken = verifyToken(cookie);
 
   const foundUser = await User.findById(decodedToken.id);
@@ -62,6 +62,7 @@ exports.createProject = async (req, res) => {
     res.status(401).send({error: 'Could not create project'});
   }
 };
+
 exports.deleteProject = async (req, res) => {
   const { projectId } = req.body;
   

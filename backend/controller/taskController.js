@@ -24,7 +24,8 @@ exports.getAllTasks = async (req, res) => {
 // return a single task
 exports.getSingleTask = async (req, res) => {
   const taskId = req.params.id;
-  const foundTask = await Task.findById(taskId);
+  const foundTask = await Task.findById(taskId).populate('Task');
+  if(!foundTask) res.status(401).send({error: 'Task not found'});
   res.status(200).send(foundTask);
 };
 
@@ -47,9 +48,9 @@ exports.createTask = async (req, res) => {
     description,
     creator: foundUser._id,
     priority,
-    completed,
+    completed: false,
     dueDate,
-    projects: [projectId],
+    project: [projectId],
   });
 
   try {
@@ -57,11 +58,19 @@ exports.createTask = async (req, res) => {
     const taskStringId = convertIdToString(savedTask._id);
     foundUser.tasks.push(taskStringId);
     foundProject.tasks.push(taskStringId);
-    await foundProject.save();
+    await foundProject.save();    
     await foundUser.save();
-    res.status(201).send({success: 'task created', taskId: taskStringId});
+    res.status(201).send({success: 'task created', task: {
+      title: savedTask.title,
+      description: savedTask.description,
+      creator: foundUser._id,
+      priority: savedTask.priority,
+      completed: false,
+      dueDate: savedTask.dueDate,
+      project: savedTask.project,
+    }});
   } catch(error) {
-    res.status(401).send({error});
+    res.status(401).send({error: 'Failed to create task'});
   }
 };
 
