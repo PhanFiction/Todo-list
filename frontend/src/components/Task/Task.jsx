@@ -12,14 +12,10 @@ const Task = ({
   toggleComplete,
   handleDelete,
   dueDate,
+  borderColor,
   children,
 }) => {
-  const randomColors = [
-    styles['border-l-orange'],
-    styles['border-l-green'],
-    styles['border-l-red'],
-    styles['border-l-blue'],
-  ];
+  console.log(taskId);
 
   const date = new Date(dueDate);
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -27,9 +23,7 @@ const Task = ({
 
   return (
     <div
-      className={`${styles['task-container']} ${
-        randomColors[Math.floor(Math.random() * 4)]
-      }`}
+      className={`${styles['task-container']} ${styles[`${borderColor}`]}`}
     >
       <CheckBox handleCompleted={() => toggleComplete(taskId)} completed={completed}>
         {children}

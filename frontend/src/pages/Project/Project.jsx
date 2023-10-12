@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 const projectService = require('../../services/project');
+const taskService = require('../../services/task');
 
 const Project = () => {
   const [project, setProjects] = useState([]);
@@ -17,8 +18,15 @@ const Project = () => {
     projectService.getProject(projectId).then(data => setProjects(data));
   }, [projectId]);
 
-  const toggleComplete = (taskId) => {
+  const toggleComplete = async (taskId) => {
     // Create a copy of the project's tasks
+    // const res = await taskService.updateTask(taskId);
+    const foundTask = project.tasks.find(task => task._id === taskId);
+    console.log(foundTask);
+    const updatedTask = {
+      ...foundTask,
+      completed: !foundTask.completed
+    }
     const updatedTasks = project.tasks.map(task => {
       if (task._id === taskId) {
         // Toggle the 'completed' property for the specific task
@@ -36,6 +44,13 @@ const Project = () => {
     setProjects({ ...project, tasks: deletedTasks });
   };
 
+  const randomColors = [
+    'border-l-orange',
+    'border-l-green',
+    'border-l-red',
+    'border-l-blue',
+  ];
+
   return(
     <Page>
       <div className={styles['project-section']}>
@@ -52,6 +67,7 @@ const Project = () => {
                 toggleComplete={toggleComplete}
                 handleDelete={handleDelete}
                 complete={complete}
+                borderColor={randomColors[index % randomColors.length]}
               >
                 {item.title}
               </Task>
