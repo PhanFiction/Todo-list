@@ -6,7 +6,7 @@ import SelectInput from '../SelectInput/SelectInput';
 import Card from '../Card/Card';
 
 const TaskForm = ({ title, description, priority, project, dueDate, 
-  titleChange, descriptionChange, priorityChange, projectChange, dueDateChange, handleSubmit, children 
+  titleChange, descriptionChange, priorityChange, projectChange, dueDateChange, handleSubmit, projects, children 
 }) => {
   return(
     <Card>
@@ -59,7 +59,11 @@ const TaskForm = ({ title, description, priority, project, dueDate,
               noBorderOutline={true}
             >
               Priority
-              <SelectInput handleValueChange={priorityChange}/>
+              <SelectInput handleValueChange={priorityChange}>
+                <option value="low" label="low">Low</option>
+                <option value="med" label="led">Medium</option>
+                <option value="high" label="high">High</option>
+              </SelectInput>
             </Label>
             <Label 
               name={project} 
@@ -67,7 +71,13 @@ const TaskForm = ({ title, description, priority, project, dueDate,
               noBorderOutline={true}
             >
               Projects
-              <SelectInput handleValueChange={projectChange}/>
+              <SelectInput handleValueChange={projectChange}>
+                {
+                  projects.map(i => 
+                    <option value={i._id} label={i.title} key={i._id}>{i.title}</option>
+                  )
+                }
+              </SelectInput>
             </Label>
           </div>
           <Button handleClick={handleSubmit} noBorder={false}>

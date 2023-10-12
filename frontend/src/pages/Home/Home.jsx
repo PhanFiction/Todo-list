@@ -54,7 +54,7 @@ const fakeApi = [
   },
 ]
 
-const Home = ({ isAuth }) => {
+const Home = () => {
   const [taskData, setTaskData] = useState(null);
 
   useEffect(() => {

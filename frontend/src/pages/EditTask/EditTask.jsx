@@ -3,7 +3,6 @@ import styles from './EditTask.module.css';
 import Page from '../../components/Page/Page';
 import TaskForm from '../../components/TaskForm/TaskForm';
 
-
 const EditTask = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');

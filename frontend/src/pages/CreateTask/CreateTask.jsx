@@ -3,12 +3,14 @@ import styles from './CreateTask.module.css';
 import Page from '../../components/Page/Page';
 import TaskForm from '../../components/TaskForm/TaskForm';
 
-const CreateTask = () => {
+const CreateTask = ({ projects, setAlert }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [priority, setPriority] = useState('');
-  const [project, setProject] = useState('Inbox');
+  const [priority, setPriority] = useState('low');
+  const [project, setProject] = useState(projects[0]._id);
   const [dueDate, setDueDate] = useState('');
+
+  const taskService = require('../../services/task');
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -23,6 +25,7 @@ const CreateTask = () => {
   };
 
   const handleProjectChange = (e) => {
+    console.log(e.target.value);
     setProject(e.target.value);
   }
 
@@ -30,11 +33,21 @@ const CreateTask = () => {
     setDueDate(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    console.log(project);
     e.preventDefault();
-    console.log('due date', dueDate, ' project ', project, ' title ', title, ' priotity ', priority, ' description ', description);
+    const newTask = {
+      title,
+      description,
+      priority,
+      dueDate,
+      projectId: project,
+    }
+    const res = await taskService.createTask(newTask);
+    if(res.success) {
+      setAlert({'message': res.success});
+    }
   }
-
 
   return(
     <Page>
@@ -52,6 +65,7 @@ const CreateTask = () => {
             projectChange={handleProjectChange}
             dueDateChange={handleDueDateChange}
             handleSubmit={handleSubmit}
+            projects={projects}
           >
             <h1>New Task</h1>
           </TaskForm>

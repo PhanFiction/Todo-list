@@ -1,12 +1,14 @@
-.home-section {
+.project-section {
   display: flex;
   flex-direction: column;
   width: 95%;
   height: 80vh;
+  margin-top: 6rem;
+  margin-left: 2rem;
 }
 
 @media screen and (max-width: 600px) {
-  .home-section {
+  .project-section {
     width: 100%;
     margin-top: 5rem;
   }
