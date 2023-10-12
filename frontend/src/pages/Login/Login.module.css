@@ -22,6 +22,7 @@
   padding: 2rem;
   border-radius: 8px;
   background-color: var(--color-old-lace);
+  margin-top: 8rem;
 }
 
 .login-form h1 {

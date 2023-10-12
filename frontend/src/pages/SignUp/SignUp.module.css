@@ -13,7 +13,7 @@
   justify-content: center;
   align-items: center;
   margin: auto;
-  width: 100%;
+  width: 70%;
 }
 
 .signup-form {
@@ -22,6 +22,7 @@
   padding: 2rem;
   border-radius: 8px;
   background-color: var(--color-old-lace);
+  margin-top: 8rem;
 }
 
 .signup-form h1 {
@@ -51,7 +52,7 @@ span:hover {
 
 @media screen and (min-width: 1440px) {
   .signup-container {
-    width: 40%;
+    width: 50%;
   }  
 }
 
