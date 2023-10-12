@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Nav from './components/Nav/Nav';
 import Home from './pages/Home/Home';
-import Projects from './pages/Projects/Projects';
+import Project from './pages/Project/Project';
 import Today from './pages/Today/Today';
 import Week from './pages/Week/Week';
 import TaskPage from './pages/TaskPage/TaskPage';
@@ -20,8 +20,6 @@ import {
   useHistory,
 } from "react-router-dom";
 
-//import * as projectService from './services/project';
-
 const projectService = require('./services/project');
 const cookie = require('js-cookie');
 
@@ -29,27 +27,19 @@ function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [userInfo, setUserInfo] = useState('');
   const [alert, setAlert] = useState(null);
-  const history = useHistory();
   const [projects, setProjects] = useState([]);
 
   const closeAlert = () => {
     setAlert(null);
   };
 
-  const fetchProjects = async () => {
-    const req = await projectService.getAllProjects();
-    setProjects(req.data);
-  };
-
   useEffect(() => {
     const userAuthCookie = cookie.get('authToken');
     if (userAuthCookie) {
       setIsAuth(true);
-      setUserInfo(userAuthCookie);;
+      setUserInfo(userAuthCookie);
+      projectService.getAllProjects().then(data => setProjects(data.data));
     }
-
-    projectService.getAllProjects().then(data => setProjects(data.data));
-    console.log(projects);
   }, []);
 
   return (
@@ -69,11 +59,11 @@ function App() {
             <PrivateRoute isAuth={isAuth}>
               <Nav setIsAuth={setIsAuth} setProjects={setProjects} projects={projects} setAlert={setAlert} />
               <Switch>
-                <Route path="/projects" component={Projects} />
+                <Route exact path="/project/:id" component={Project} />
                 <Route exact path="/week" component={Week} />
-                <Route exact path="/task/:id" component={TaskPage} />
-                <Route exact path="/create-task" component={CreateTask} />
-                <Route path="/today" component={Today} />
+                <Route exact path="/task/:id" component={TaskPage} projects={projects}/>
+                <Route exact path="/create-task" render={(props) => <CreateTask {...props} setAlert={setAlert} projects={projects}/>} />
+                <Route exact path="/today" component={Today} />
                 <Route exact path="/create-project" render={(props) => <CreateProject {...props} setAlert={setAlert} setProjects={setProjects}/>} />
                 <Route exact path="/edit-task/:id" component={EditTask} />
                 <Route exact path="/" render={(props) => <Home {...props} isAuth={isAuth} />} />
@@ -81,29 +71,6 @@ function App() {
             </PrivateRoute>
           </>
       </div>
-{/*       <div className="page-layout">
-        {isAuth ? (
-          <>
-            <Nav setIsAuth={setIsAuth} />
-            <Switch>
-              <Route path="/projects" component={Projects} />
-              <Route exact path="/week" component={Week} />
-              <Route exact path="/task/:id" component={TaskPage} />
-              <Route exact path="/create-task" component={CreateTask} />
-              <Route path="/today" component={Today} />
-              <Route exact path="/create-project" render={(props) => <CreateProject {...props} setAlert={setAlert} />} />
-              <Route exact path="/edit-task/:id" component={EditTask} />
-              <Route exact path="/" render={(props) => <Home {...props} isAuth={isAuth} />} />
-            </Switch>
-          </>
-        ) : (
-          <>
-            <Route exact path="/signup" render={(props) => <SignUp {...props} isAuth={isAuth} setAlert={setAlert} />} />
-            <Route exact path="/login" render={(props) => <Login {...props} isAuth={isAuth} setAlert={setAlert} />} />
-            <Redirect exact from="/" to="/login" />
-          </>
-        )}
-      </div> */}
     </>
   );
 }

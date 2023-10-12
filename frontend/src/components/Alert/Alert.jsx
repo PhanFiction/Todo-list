@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Alert.module.css';
 
-const Alert = ({ message, type, onClose }) => {
+const Alert = ({ message, onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const handleClose = () => {
