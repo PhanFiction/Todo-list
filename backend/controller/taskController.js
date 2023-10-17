@@ -79,6 +79,7 @@ exports.updateTask = async (req, res) => {
   const { title, description, priority, completed, dueDate } = req.body;
   const taskId = req.params.id;
   const foundTask = await Task.findById(taskId);
+  console.log(taskId);
 
   if(!foundTask) return res.status(401).send({'Task error': 'Task not found'});
 
@@ -88,17 +89,11 @@ exports.updateTask = async (req, res) => {
   const foundUser = await User.findById(decodedToken.id);
   if(!foundUser) return res.status(401).send({error: 'User not found'});
   if(!decodedToken) return res.status(401).send({error: 'Not authorized'});
-  if(foundPin.creator != decodedToken.id) return res.status(401).send({error: 'Not authorized'});
+  if(foundTask.creator != decodedToken.id) return res.status(401).send({error: 'Not authorized'});
 
   try{
-    foundTask.title = title || foundTask.title;
-    foundTask.description = description || foundTask.description;
-    foundTask.priority = priority;
-    foundTask.completed = completed;
-    foundTask.dueDate = dueDate;
-
-    await foundTask.save();
-    res.status(200).json({ success: 'Task has been updated' });
+    await Task.findByIdAndUpdate(taskId, { title, description, priority, completed, dueDate });
+    res.status(200).send({ success: 'Task has been updated' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -108,7 +103,6 @@ exports.updateTask = async (req, res) => {
 exports.deleteTask = async (req, res) => {
   const taskId = req.params.id;
 
-  try {
     const foundTask = await Task.findById(taskId);
 
     if (!foundTask) return res.status(404).json({ error: 'Task not found' });
@@ -121,23 +115,24 @@ exports.deleteTask = async (req, res) => {
     if (!foundUser) return res.status(403).json({ error: 'User not found' });
     if (foundTask.creator.toString() !== decodedToken.id) return res.status(403).json({ error: 'Not authorized' });
 
-    const foundProject = await Project.find(foundTask.project);
+    try{
+      const foundProject = await Project.findById(foundTask.project); 
 
-    // Delete the task id in project
-    foundProject.tasks = foundProject.tasks.filter((taskId) => taskId.toString() !== taskId);
-    
-    // Delete the task from the database
-    await Task.findByIdAndDelete(taskId);
+      // Delete the task id in project
+      foundProject.tasks = foundProject.tasks.filter(taskId => console.log(taskId.toString() !== taskId));
+      
+      // Delete the task from the database
+      await Task.findByIdAndDelete(taskId);
 
-    // Update the user's tasks by removing the deleted task's ID
-    foundUser.tasks = foundUser.tasks.filter((taskId) => taskId.toString() !== taskId);
+      // Update the user's tasks by removing the deleted task's ID
+      console.log(foundUser);
+      foundUser.tasks = foundUser.tasks.filter((taskId) => taskId.toString() !== taskId);
 
-    // Save the user
-    await foundUser.save();
+      // Save the user
+      await foundUser.save();
 
-    res.status(200).json({ success: 'Task deleted' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+      res.status(200).json({ success: 'Task deleted' });
+    } catch(error) {
+      res.status(501).send({error: "Could not delete task"});
+    }
 };

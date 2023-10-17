@@ -9,7 +9,7 @@ import {
 const projectService = require('../../services/project');
 const taskService = require('../../services/task');
 
-const Project = () => {
+const Project = ({ setAlert }) => {
   const [project, setProjects] = useState([]);
   const [complete, isComplete] = useState('');
   const projectId = useParams().id;
@@ -20,36 +20,36 @@ const Project = () => {
 
   const toggleComplete = async (taskId) => {
     // Create a copy of the project's tasks
-    // const res = await taskService.updateTask(taskId);
     const foundTask = project.tasks.find(task => task._id === taskId);
     console.log(foundTask);
-    const updatedTask = {
+    const updateTask = {
       ...foundTask,
-      completed: !foundTask.completed
+      completed: !foundTask.completed,
     }
-    const updatedTasks = project.tasks.map(task => {
-      if (task._id === taskId) {
-        // Toggle the 'completed' property for the specific task
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
+    const res = await taskService.updateTask(taskId, updateTask);
 
-    // Update the project state with the updated tasks
-    setProjects({ ...project, tasks: updatedTasks });
+    if(res.success) {
+      const updatedTasks = project.tasks.map(task => {
+        if (task._id === taskId) {
+          // Toggle the 'completed' property for the specific task
+          return { ...task, completed: !task.completed };
+        }
+        return task;
+      });
+  
+      // Update the project state with the updated tasks
+      setProjects({ ...project, tasks: updatedTasks });
+    }
   };
 
-  const handleDelete = (taskId) => {
-    const deletedTasks = project.tasks.filter(task => task._id !== taskId);
-    setProjects({ ...project, tasks: deletedTasks });
+  const handleDeleteTask = async (taskId) => {
+    const res = await taskService.deleteTask(taskId);
+    if(res.success) {
+      setAlert({'message': res.success});
+      const deletedTasks = project.tasks.filter(task => task._id !== taskId);
+      setProjects({ ...project, tasks: deletedTasks });
+    }
   };
-
-  const randomColors = [
-    'border-l-orange',
-    'border-l-green',
-    'border-l-red',
-    'border-l-blue',
-  ];
 
   return(
     <Page>
@@ -65,9 +65,8 @@ const Project = () => {
                 setTaskData={setProjects}
                 dueDate={item.dueDate}
                 toggleComplete={toggleComplete}
-                handleDelete={handleDelete}
+                handleDelete={handleDeleteTask}
                 complete={complete}
-                borderColor={randomColors[index % randomColors.length]}
               >
                 {item.title}
               </Task>

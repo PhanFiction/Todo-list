@@ -5,7 +5,7 @@ const CheckBox = ({ completed, handleCompleted, children }) => {
     <label
       className={`${styles['checkbox-label']} ${completed ? styles.completed : styles['not-completed']}`}
     >
-      <input type="checkbox" onChange={handleCompleted} />
+      <input type="checkbox" onChange={handleCompleted} checked={completed}/>
       {children}
     </label>
   )
