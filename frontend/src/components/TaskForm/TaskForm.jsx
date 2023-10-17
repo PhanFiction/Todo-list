@@ -61,7 +61,7 @@ const TaskForm = ({ title, description, priority, project, dueDate,
               Priority
               <SelectInput handleValueChange={priorityChange}>
                 <option value="low" label="low">Low</option>
-                <option value="med" label="led">Medium</option>
+                <option value="med" label="med">Medium</option>
                 <option value="high" label="high">High</option>
               </SelectInput>
             </Label>
