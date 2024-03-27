@@ -29,6 +29,73 @@ exports.getSingleTask = async (req, res) => {
   res.status(200).send(foundTask);
 };
 
+exports.getTodayTasks = async (req, res) => {
+  const cookie = cookieExtractor(req);
+  const decodedToken = verifyToken(cookie);
+
+  if (!decodedToken) {
+    return res.status(401).send({ error: 'Invalid or expired token' });
+  }
+
+  // Calculate the start and end of the current day
+  const currentDate = new Date();
+  const startOfDay = new Date(currentDate);
+  startOfDay.setHours(0, 0, 0, 0);
+  
+  const endOfDay = new Date(currentDate);
+  endOfDay.setHours(23, 59, 59, 999);
+
+  try {
+    // Find tasks with due dates equal to the current date for the user
+    const tasksDueToday = await Task.find({
+      creator: decodedToken.id,
+      dueDate: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    });
+
+    res.json(tasksDueToday);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching tasks due today' });
+  }
+};
+
+exports.getWeekTasks = async (req, res) => {
+  const cookie = cookieExtractor(req);
+  const decodedToken = verifyToken(cookie);
+
+  if (!decodedToken) {
+    return res.status(401).send({ error: 'Invalid or expired token' });
+  }
+
+  // Calculate the start and end of the current week
+  const currentDate = new Date();
+  const startOfWeek = new Date(currentDate);
+  startOfWeek.setHours(0, 0, 0, 0);
+  startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+  
+  const endOfWeek = new Date(currentDate);
+  endOfWeek.setHours(23, 59, 59, 999);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+  try {
+    // Find tasks with due dates within the current week for the user
+    const upcomingTasks = await Task.find({
+      creator: decodedToken.id,
+      dueDate: {
+        $gte: startOfWeek,
+        $lte: endOfWeek,
+      },
+    });
+
+    res.json(upcomingTasks);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching upcoming tasks' });
+  }
+};
+
+
 // create a new task
 exports.createTask = async (req, res) => {
   const { title, description, priority, dueDate, projectId } = req.body;
