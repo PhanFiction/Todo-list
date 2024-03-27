@@ -5,6 +5,10 @@ const Project = require('../models/Project');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
+exports.home = async (req, res) => {
+  return res.send(<h1>Home Page</h1>);
+}
+
 exports.login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
