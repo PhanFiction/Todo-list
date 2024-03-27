@@ -11,13 +11,17 @@ export const login = async (credentials) => {
 };
 
 export const signUp = async (credentials) => {
-  const response = await axios.post(`${process.env.REACT_APP_API}/signup`, credentials, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
-  });
-  return response.data;
+  try {
+    const response = await axios.post(`${process.env.REACT_APP_API}/signup`, credentials, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  } catch(error) {
+    console.log(error);
+  }
 };
 
 export const logout = async () => {

@@ -34,7 +34,6 @@ exports.login = async (req, res) => {
   
   try {
     const token = jwt.sign(userForToken, config.SECRET_KEY);
-    
     res
       .cookie('authToken', token, {maxAge: oneDay}, { httpOnly: true })
       .status(201)

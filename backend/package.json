@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev nodemon index.js",
-    "test":"cross-env NODE_ENV=test nodemon index.js",
+    "dev": "cross-env NODE_ENV=dev nodemon ./api/index.js",
+    "test":"cross-env NODE_ENV=test nodemon ./api/index.js",
     "unit_test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit", 
     "single_unit_test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit -t"
   },
