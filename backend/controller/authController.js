@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
 exports.home = async (req, res) => {
-  return res.send(<h1>Home Page</h1>);
+  res.send("Express on Vercel");
 }
 
 exports.login = async (req, res) => {
