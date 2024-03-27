@@ -28,6 +28,7 @@ const SignUp = ({ isAuth, setAlert }) => {
     }
     try {
       const res = await authService.signUp(newUser);
+      console.log('result ', res);
       if (res.success) {
         history.push(`${res.redirectURL}`);
       }
