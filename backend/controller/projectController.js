@@ -18,7 +18,7 @@ exports.getAllProjects = async (req, res) => {
   if (!foundUser) return res.status(401).send({error: 'User not found'});
   
   const foundProjects = await Project.find({creator: decodedToken.id});
-  res.status(200).send({data: foundProjects});
+  res.status(200).send(foundProjects);
 };
 
 // return a single project
