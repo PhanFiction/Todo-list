@@ -17,31 +17,17 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import {
   Switch,
   Route,
-  useHistory,
 } from "react-router-dom";
+import { useIsAuth } from './hooks/useIsAuth';
 
-const projectService = require('./services/project');
-const cookie = require('js-cookie');
+// const projectService = require('./services/project');
+// const cookie = require('js-cookie');
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false);
-  const [userInfo, setUserInfo] = useState('');
   const [alert, setAlert] = useState(null);
-  const [projects, setProjects] = useState([]);
-
-  const closeAlert = () => {
-    setAlert(null);
-  };
-
-  useEffect(() => {
-    const userAuthCookie = cookie.get('authToken');
-    if (userAuthCookie) {
-      setIsAuth(true);
-      setUserInfo(userAuthCookie);
-      projectService.getAllProjects().then(data => setProjects(data.data));
-    }
-  }, []);
-
+  const { isAuth } = useIsAuth();
+  const closeAlert = () => setAlert(null);
+  
   return (
     <>
       <Header />
@@ -53,23 +39,21 @@ function App() {
         />
       )}
       <div className="page-layout">
-          <>
-            <Route exact path="/signup" render={(props) => <SignUp {...props} isAuth={isAuth} setAlert={setAlert} />} />
-            <Route exact path="/login" render={(props) => <Login {...props} setAuth={setIsAuth} isAuth={isAuth} setAlert={setAlert} />} />
-            <PrivateRoute isAuth={isAuth}>
-              <Nav setIsAuth={setIsAuth} setProjects={setProjects} projects={projects} setAlert={setAlert} />
-              <Switch>
-                <Route exact path="/project/:id" component={Project} />
-                <Route exact path="/week" component={Week} />
-                <Route exact path="/task/:id" component={TaskPage} projects={projects}/>
-                <Route exact path="/create-task" render={(props) => <CreateTask {...props} setAlert={setAlert} projects={projects}/>} />
-                <Route exact path="/today" component={Today} />
-                <Route exact path="/create-project" render={(props) => <CreateProject {...props} setAlert={setAlert} setProjects={setProjects}/>} />
-                <Route exact path="/edit-task/:id" component={EditTask} />
-                <Route exact path="/" render={(props) => <Home {...props} isAuth={isAuth} />} />
-              </Switch>
-            </PrivateRoute>
-          </>
+        <Route exact path="/signup" render={(props) => <SignUp {...props} isAuth={isAuth} setAlert={setAlert} />} />
+        <Route exact path="/login" render={(props) => <Login {...props} isAuth={isAuth} setAlert={setAlert} />} />
+        <PrivateRoute isAuth={isAuth}>
+          <Nav setAlert={setAlert} />
+          <Switch>
+            <Route exact path="/project/:id" component={Project} />
+            <Route exact path="/this-week" render={(props) => <Week setAlert={setAlert}/>} />
+            <Route exact path="/task/:id" component={TaskPage} />
+            <Route exact path="/create-task" render={(props) => <CreateTask {...props} setAlert={setAlert}/>} />
+            <Route exact path="/today" render={(props) => <Today setAlert={setAlert}/>} />
+            <Route exact path="/create-project" render={(props) => <CreateProject {...props} setAlert={setAlert} />} />
+            <Route exact path="/edit-task/:id" render={(props) => <EditTask sertAlert={setAlert} />} />
+            <Route exact path="/" render={(props) => <Home {...props} isAuth={isAuth} setAlert={setAlert}/>} />
+          </Switch>
+        </PrivateRoute>
       </div>
     </>
   );

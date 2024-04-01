@@ -27,8 +27,9 @@ aside {
   background-color: var(--color-old-lace);
   width: 200px;
   min-width: 150px;
-  height: 90vh;
   margin-top: 5rem;
+  height: 100vh;
+  position: fixed;
 }
 
 aside ul, aside .project-container {
@@ -88,7 +89,7 @@ aside ul li:last-child {
   margin-left: 2rem;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 1025px) {
   .hamburger {
     display: none;
   }
@@ -102,7 +103,7 @@ aside ul li:last-child {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1025px) {
   aside ul {
     margin-top: 1.5rem;
   }

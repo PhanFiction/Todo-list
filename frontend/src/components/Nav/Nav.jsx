@@ -1,30 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { faHouse, faCalendarDay, faCalendarWeek, faCirclePlus, faSignOut, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import FaIcon from '../FaIcon/FaIcon';
 import LinkRoute from '../LinkRoute/LinkRoute';
 import Button from '../Button/Button';
 import styles from './Nav.module.css';
 import { useHistory } from 'react-router-dom';
+import { useFetchProjects } from '../../hooks/useFetchData';
+import { useIsAuth } from '../../hooks/useIsAuth';
 
 const authService = require('../../services/auth');
 const projectService = require('../../services/project');
 
-const Nav = ({ setIsAuth, setProjects, projects, setAlert }) => {
+const Nav = ({ setAlert }) => {
   const [toggle, setToggle] = useState(false);
   const history = useHistory();
+
+  const { setAuth } = useIsAuth();
+  const { projects, setProjects } = useFetchProjects();
 
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
       const res = await authService.logout();
-      setIsAuth(false);
       setAlert({'message': res.success});
-      history.push(`${res.redirectURL}`)
+      setAuth(false);
+      history.push(`${res.redirectURL}`);
     } catch(error) {
       setAlert({'message': 'Failed to logout'});
     }
   }
 
+  // delete the project
   const handleDelete = async (itemId) => {
     try {
       const res = await projectService.deleteProject(itemId);
@@ -38,9 +44,8 @@ const Nav = ({ setIsAuth, setProjects, projects, setAlert }) => {
     }
   }
 
-  const toggleMenu = () => {
-    setToggle(!toggle);
-  }
+  // Toggle the menu when in tablet or mobile view
+  const toggleMenu = () => setToggle(!toggle);
 
   return(
     <>
@@ -139,7 +144,7 @@ const Nav = ({ setIsAuth, setProjects, projects, setAlert }) => {
                 </Button>
               </LinkRoute>
               <div className={styles['project-container']}>
-                {projects.map(project => (
+                {projects?.map(project => (
                   <li className={styles['items']} key={project._id}>
                     <LinkRoute to={`project/${project._id}`}>{project.title}</LinkRoute>
                     <Button
