@@ -17,16 +17,22 @@ exports.getAllTasks = async (req, res) => {
   const foundUser = await User.findById(decodedToken.id);
   if (!foundUser) return res.status(401).send({error: 'User not found'});
   
-  const foundTasks = await Task.find(decodedToken.id);
-  res.status(200).send({data: foundTasks});
+  const foundTasks = await Task.find({creator: decodedToken.id});
+  res.status(200).send(foundTasks);
 };
 
 // return a single task
 exports.getSingleTask = async (req, res) => {
-  const taskId = req.params.id;
-  const foundTask = await Task.findById(taskId).populate('Task');
-  if(!foundTask) res.status(401).send({error: 'Task not found'});
-  res.status(200).send(foundTask);
+  try {
+    const taskId = req.params.id;
+    const foundTask = await Task.findById(taskId);
+
+    if(!foundTask) res.status(401).send({error: 'Task not found'});
+    
+    res.status(200).send(foundTask);
+  } catch (error) {
+    res.status(401).send({error: 'could not fetch task'});
+  }
 };
 
 exports.getTodayTasks = async (req, res) => {
@@ -61,13 +67,11 @@ exports.getTodayTasks = async (req, res) => {
   }
 };
 
-exports.getWeekTasks = async (req, res) => {
+exports.getWeeklyTasks = async (req, res) => {
   const cookie = cookieExtractor(req);
   const decodedToken = verifyToken(cookie);
 
-  if (!decodedToken) {
-    return res.status(401).send({ error: 'Invalid or expired token' });
-  }
+  if (!decodedToken) return res.status(401).send({ error: 'Invalid or expired token' });
 
   // Calculate the start and end of the current week
   const currentDate = new Date();
@@ -116,7 +120,6 @@ exports.createTask = async (req, res) => {
     creator: foundUser._id,
     priority,
     completed: false,
-    dueDate,
     project: [projectId],
   });
 
