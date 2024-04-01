@@ -20,9 +20,6 @@ import {
 } from "react-router-dom";
 import { useIsAuth } from './hooks/useIsAuth';
 
-// const projectService = require('./services/project');
-// const cookie = require('js-cookie');
-
 function App() {
   const [alert, setAlert] = useState(null);
   const { isAuth } = useIsAuth();
