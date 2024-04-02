@@ -4,10 +4,17 @@ import Input from '../Input/Input';
 import Button from '../Button/Button';
 import SelectInput from '../SelectInput/SelectInput';
 import Card from '../Card/Card';
+import {
+  useParams,
+} from "react-router-dom";
 
-const TaskForm = ({ title, description, priority, project, dueDate, 
-  titleChange, descriptionChange, priorityChange, projectChange, dueDateChange, handleSubmit, projects, children 
+const TaskForm = ({ 
+  title, description, priority, project, dueDate, 
+  titleChange, descriptionChange, priorityChange, 
+  projectChange, dueDateChange, handleSubmit,
+  projects, children
 }) => {
+  
   return(
     <Card>
       <form className={styles["task-form-container"]}>
@@ -61,7 +68,7 @@ const TaskForm = ({ title, description, priority, project, dueDate,
               Priority
               <SelectInput handleValueChange={priorityChange}>
                 <option value="low" label="low">Low</option>
-                <option value="med" label="med">Medium</option>
+                <option value="medium" label="medium">Medium</option>
                 <option value="high" label="high">High</option>
               </SelectInput>
             </Label>
@@ -73,7 +80,7 @@ const TaskForm = ({ title, description, priority, project, dueDate,
               Projects
               <SelectInput handleValueChange={projectChange}>
                 {
-                  projects.map(i => 
+                  projects?.map(i => 
                     <option value={i._id} label={i.title} key={i._id}>{i.title}</option>
                   )
                 }
