@@ -2,39 +2,24 @@ import React, { useState } from 'react';
 import styles from './CreateTask.module.css';
 import Page from '../../components/Page/Page';
 import TaskForm from '../../components/TaskForm/TaskForm';
+import { useFetchProjects } from '../../hooks/useFetchData';
+const taskService = require('../../services/task');
 
-const CreateTask = ({ projects, setAlert }) => {
+const CreateTask = ({ setAlert }) => {
+  const { projects } = useFetchProjects();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('low');
-  const [project, setProject] = useState(projects[0]._id);
+  const [project, setProject] = useState(projects[0]?._id);
   const [dueDate, setDueDate] = useState('');
 
-  const taskService = require('../../services/task');
-
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  }
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  }
-
-  const handlePriorityChange = (e) => {
-    setPriority(e.target.value);
-  };
-
-  const handleProjectChange = (e) => {
-    console.log(e.target.value);
-    setProject(e.target.value);
-  }
-
-  const handleDueDateChange = (e) => {
-    setDueDate(e.target.value);
-  };
+  const handleTitleChange = (e) => setTitle(e.target.value);
+  const handleDescriptionChange = (e) => setDescription(e.target.value);
+  const handlePriorityChange = (e) => setPriority(e.target.value);
+  const handleProjectChange = (e) => setProject(e.target.value);
+  const handleDueDateChange = (e) => setDueDate(e.target.value);
 
   const handleSubmit = async (e) => {
-    console.log(project);
     e.preventDefault();
     const newTask = {
       title,
@@ -43,9 +28,11 @@ const CreateTask = ({ projects, setAlert }) => {
       dueDate,
       projectId: project,
     }
-    const res = await taskService.createTask(newTask);
-    if(res.success) {
-      setAlert({'message': res.success});
+    try {
+      const res = await taskService.createTask(newTask);
+      if(res.success) setAlert({'message': res.success});
+    } catch(error) {
+      setAlert({'message': 'failed to save task'});
     }
   }
 

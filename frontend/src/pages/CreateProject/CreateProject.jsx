@@ -5,15 +5,15 @@ import Label from '../../components/Label/Label';
 import Input from '../../components/Input/Input';
 import Card from '../../components/Card/Card';
 import Button from '../../components/Button/Button';
+import { useFetchProjects } from '../../hooks/useFetchData';
 
 const projectService = require('../../services/project');
 
-const CreateProject = ({ setAlert, setProjects }) => {
+const CreateProject = ({ setAlert }) => {
   const [title, setTitle] = useState('');
+  const { setProjects } = useFetchProjects();
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  }
+  const handleTitleChange = (e) => setTitle(e.target.value);
 
   const handleProjectSubmit = async (e) => {
     e.preventDefault();
