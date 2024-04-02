@@ -6,12 +6,14 @@ import Label from '../../components/Label/Label';
 import Input from '../../components/Input/Input';
 import LinkRoute from '../../components/LinkRoute/LinkRoute';
 import { useHistory, Redirect } from 'react-router-dom';
+import { useIsAuth } from '../../hooks/useIsAuth';
 const authService = require('../../services/auth');
 
-const Login = ({ isAuth, setAuth, setAlert }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Login = ({ setAlert }) => {
+  const [username, setUsername] = useState('tester');
+  const [password, setPassword] = useState('12345');
   const history = useHistory();
+  const { isAuth, setAuth } = useIsAuth();
 
   if(isAuth === true) {
     return (
