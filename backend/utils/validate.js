@@ -1,6 +1,6 @@
 const { check } = require('express-validator');
 
-exports.validateSignUpCredentials = [
+exports.signUpCredentials = [
   check('username')
     .trim()
     .escape()
@@ -23,7 +23,7 @@ exports.validateSignUpCredentials = [
     .bail(),
 ];
 
-exports.validateLoginCredentials = [
+exports.loginCredentials = [
   check('username')
   .trim()
   .escape()
