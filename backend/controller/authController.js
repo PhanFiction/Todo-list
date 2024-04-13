@@ -5,10 +5,6 @@ const Project = require('../models/Project');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
-exports.home = async (req, res) => {
-  res.send("Express on Vercel");
-}
-
 exports.login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -17,7 +13,7 @@ exports.login = async (req, res) => {
       errors: errorMessages
     });
   };
-
+  
   const { username, password } = req.body;
   const user = await User.findOne({username});
   // compare password from body and db
