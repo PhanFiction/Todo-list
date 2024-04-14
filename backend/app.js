@@ -8,10 +8,11 @@ const authRoutes = require('./routes/authRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const mongoose = require('mongoose');
+const path = require('path');
 
 app.use(
   cors({
-    origin: `http://localhost:${config.CLIENT_PORT}`,
+    origin: "*",
     credentials: true,
   })
 );
@@ -21,12 +22,18 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
+app.use(express.static(path.join(__dirname, 'build')));
+
 mongoose.connect(config.databaseURL)
-  .then(() => console.log('Connected to database'));
+  .then(() => console.log('Connected to database')).catch(error => console.log(error));
   
 app.use(express.json());
 
-app.use('/', authRoutes);
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+app.use('/auth', authRoutes);
 app.use('/project', projectRoutes);
 app.use('/task', taskRoutes);
 
